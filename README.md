@@ -14,5 +14,8 @@ Prototype with:
 - player sprite rendering
 - movement testing
 
+## TODO
+- Make a title screen
+
 ## Build
 Instructions coming soon.
