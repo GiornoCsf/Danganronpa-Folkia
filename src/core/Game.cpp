@@ -2,6 +2,8 @@
 #include "Config.h"
 #include <raylib.h>
 
+Config::GameState Config::gameState = Config::GameState::Title;
+
 void Game::Run()
 {
     Init();
@@ -22,6 +24,8 @@ void Game::Init()
     InitWindow(Config::screenWidth, Config::screenHeight, Config::name);
     SetTargetFPS(60);
 
+    ui.Init();
+
     tileManager.LoadTiles();
     tileManager.LoadMap("res/maps/test.txt");
 
@@ -30,7 +34,8 @@ void Game::Init()
 
 void Game::Update(float dt)
 {
-    player.Update(keyH, dt);
+    if (Config::gameState == Config::GameState::Play)
+        player.Update(keyH, dt);
 }
 
 void Game::Draw()
@@ -38,9 +43,13 @@ void Game::Draw()
     BeginDrawing();
     ClearBackground(BLACK);
 
-    tileManager.Draw();
+    if (Config::gameState == Config::GameState::Play) {
+        tileManager.Draw();
+        player.Draw();
+    }
+    else if (Config::gameState == Config::GameState::Title)
+        ui.Draw();
 
-    player.Draw();
     EndDrawing();
 }
 

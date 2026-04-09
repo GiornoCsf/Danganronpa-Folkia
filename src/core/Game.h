@@ -1,6 +1,7 @@
 #pragma once
 
 #include "KeyHandler.h"
+#include "Ui.h"
 #include "../entities/Player.h"
 #include "../tile/TileManager.h"
 
@@ -17,5 +18,6 @@ private:
 
     KeyHandler keyH;
     TileManager tileManager;
+    Ui ui;
     Player player;
 };

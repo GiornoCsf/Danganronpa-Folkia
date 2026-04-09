@@ -13,4 +13,12 @@ namespace Config
 
     constexpr int screenWidth = tileSize * maxScreenCol;
     constexpr int screenHeight = tileSize * maxScreenRow;
+
+    // GAME STATES
+    enum class GameState
+    {
+        Title,
+        Play
+    };
+    extern GameState gameState;
 }
