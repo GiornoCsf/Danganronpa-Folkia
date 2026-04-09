@@ -18,4 +18,15 @@ Prototype with:
 - Make a title screen
 
 ## Build
-Instructions coming soon.
+
+### Requirements
+- CMake
+- A C++ compiler with C++17 support
+- Git
+
+### Clone the repository
+If you are cloning the project for the first time, make sure to include submodules:
+
+```powershell
+git clone --recurse-submodules <repo-url>
+cd Danganronpa-Folkia
