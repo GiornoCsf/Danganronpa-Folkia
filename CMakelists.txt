@@ -42,7 +42,7 @@ endif()
 # Ensure raylib is built as static libraries
 set(BUILD_SHARED_LIBS OFF CACHE BOOL "Build Raylib as static libraries" FORCE)
 
-project(mygame)
+project(danganronpa)
 
 # add raylib, and here you would add other libraries if needed!
 add_subdirectory(thirdParty/raylib)

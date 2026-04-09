@@ -2,8 +2,6 @@
 #include "Config.h"
 #include <raylib.h>
 
-Config::GameState Config::gameState = Config::GameState::Title;
-
 void Game::Run()
 {
     Init();
