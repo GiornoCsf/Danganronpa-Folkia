@@ -4,6 +4,7 @@
 #include "Ui.h"
 #include "../entities/Player.h"
 #include "../tile/TileManager.h"
+#include "../audio/AudioManager.h"
 
 class Game
 {
@@ -18,6 +19,7 @@ private:
 
     KeyHandler keyH;
     TileManager tileManager;
+    AudioManager aManager;
     Ui ui;
     Player player;
 };

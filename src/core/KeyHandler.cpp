@@ -1,5 +1,6 @@
 #include "KeyHandler.h"
 #include "Config.h"
+#include "../audio/AudioManager.h"
 #include <raylib.h>
 
 void KeyHandler::Update()
@@ -21,8 +22,10 @@ void KeyHandler::Update()
 
     if (IsKeyPressed(KEY_ENTER)) 
     {
-        if (Config::commandNum == 0)
+        if (Config::commandNum == 0) {
             Config::gameState = Config::GameState::Play;
+            AudioManager::PlayBGM(BGM_FREE_ROAM);
+        }
     }
             
     }

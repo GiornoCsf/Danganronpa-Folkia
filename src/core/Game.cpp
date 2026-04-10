@@ -22,6 +22,8 @@ void Game::Init()
     InitWindow(Config::screenWidth, Config::screenHeight, Config::name);
     SetTargetFPS(60);
 
+    AudioManager::Init();
+    AudioManager::PlayBGM(BGM_TITLE);
     ui.Init();
 
     tileManager.LoadTiles();
@@ -32,8 +34,11 @@ void Game::Init()
 
 void Game::Update(float dt)
 {
-    if (Config::gameState == Config::GameState::Play)
+    AudioManager::Update();
+
+    if (Config::gameState == Config::GameState::Play) {
         player.Update(keyH, dt);
+    }
 }
 
 void Game::Draw()
