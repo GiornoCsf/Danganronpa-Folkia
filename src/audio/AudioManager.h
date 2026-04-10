@@ -4,14 +4,8 @@
 #include <vector>
 
 enum SoundID {
-    SFX_HURT,
-    SFX_SWORD,
-    SFX_HITMONSTER,
-    SFX_LEVELUP,
-    SFX_CURSOR,
-    SFX_ITEM_EQUIP,
-    SFX_DRINKING,
-    SFX_ARROW
+    SFX_SELECT,
+    SFX_CURSOR
 };
 
 enum MusicID {

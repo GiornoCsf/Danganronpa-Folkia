@@ -16,6 +16,7 @@ Ui::~Ui()
 void Ui::Init()
 {
     titleBackground = LoadTexture("res/textures/courtroom.png");
+    hud = LoadTexture("res/textures/HUD.png");
     titleFont = LoadFontEx("res/fonts/serpentine-sans-icg-bold-oblique.ttf", 64, nullptr, 0); 
     textFont = LoadFontEx("res/fonts/goodbyeDespair.ttf", 32, nullptr, 0);
     
@@ -25,10 +26,13 @@ void Ui::Init()
 
 void Ui::Draw() 
 {
-    switch (Config::gameState) 
+    switch (Config::gameMode) 
     {
-        case Config::GameState::Title:
+        case Config::GameMode::Title:
             DrawTitleScreen();
+            break;
+        case Config::GameMode::Overworld2D:
+            DrawPlayUI();
             break;
     }
 }
@@ -40,62 +44,40 @@ void Ui::DrawTitleScreen()
     Rectangle dest = { 0.0f, 0.0f, (float)GetScreenWidth(), (float)GetScreenHeight() };
 
     DrawTexturePro(titleBackground, source, dest, { 0, 0 }, 0.0f, WHITE);
-    //TITLE NAME
+    
+    // MAIN TITLE
     std::string text = "Danganronpa:Folkia";
     float x = GetCentredTextX(titleFont, text, 64.0f, 2.0f);
-    float y = Config::tileSize * 4;
-    Vector2 position = { x, y};
-    DrawTextEx(titleFont, text.c_str(), position, 64.0f, 2.0f, RAYWHITE);
+    float y = Config::tileSize * 4.0f;
 
-    //MENU
-    text = "NEW GAME";
-    x = GetCentredTextX(textFont, text, 32.0f, 2.0f);
-    y += Config::tileSize * 3.5;
-    position = {x, y};
+    DrawTextEx(titleFont, text.c_str(), { x, y }, 64.0f, 2.0f, RAYWHITE);
 
-    if (Config::commandNum != 0) {
-         DrawTextEx(textFont, text.c_str(), position, 32.0f, 2.0f, RAYWHITE);
-    } else {
-         DrawTextEx(textFont, text.c_str(), position, 32.0f, 2.0f, RAYWHITE);
-         BlinkingArrow(x, y);
-    }
-   
+    // NEW GAME
+    y += Config::tileSize * 3.5f;
+    DrawMenuOption("NEW GAME", 0, y);
 
-    //MENU
-    text = "CHAPTER SELECT";
-    x = GetCentredTextX(textFont, text, 32.0f, 2.0f);
+    // LOAD GAME
     y += Config::tileSize;
-    position = {x, y};
-    if (Config::commandNum != 1) {
-         DrawTextEx(textFont, text.c_str(), position, 32.0f, 2.0f, RAYWHITE);
-    } else {
-         DrawTextEx(textFont, text.c_str(), position, 32.0f, 2.0f, RAYWHITE);
-         BlinkingArrow(x, y);
-    }
+    DrawMenuOption("LOAD GAME", 1, y);
 
-    //MENU
-    text = "EXTRAS";
-    x = GetCentredTextX(textFont, text, 32.0f, 2.0f);
+    // OPTIONS
     y += Config::tileSize;
-    position = {x, y};
-    if (Config::commandNum != 2) {
-         DrawTextEx(textFont, text.c_str(), position, 32.0f, 2.0f, RAYWHITE);
-    } else {
-         DrawTextEx(textFont, text.c_str(), position, 32.0f, 2.0f, RAYWHITE);
-         BlinkingArrow(x, y);
-    }
+    DrawMenuOption("OPTIONS", 2, y);
 
-    //MENU
-    text = "OPTIONS";
-    x = GetCentredTextX(textFont, text, 32.0f, 2.0f);
+    // QUIT
     y += Config::tileSize;
-    position = {x, y};
-    if (Config::commandNum != 3) {
-         DrawTextEx(textFont, text.c_str(), position, 32.0f, 2.0f, RAYWHITE);
-    } else {
-         DrawTextEx(textFont, text.c_str(), position, 32.0f, 2.0f, RAYWHITE);
-         BlinkingArrow(x, y);
-    }
+    DrawMenuOption("QUIT", 3, y);
+
+    
+}
+
+void Ui::DrawPlayUI()
+{
+    Rectangle source = { 0.0f, 0.0f, (float)hud.width, (float)hud.height};
+
+    Rectangle dest = { 0.0f, 0.0f, (float)GetScreenWidth(), (float)GetScreenHeight() };
+
+    DrawTexturePro(hud, source, dest, { 0, 0 }, 0.0f, WHITE);
 }
 
 float Ui::GetCentredTextX(const Font& font, const std::string& text, float fontSize, float spacing)
@@ -113,5 +95,17 @@ void Ui::BlinkingArrow(int x, int y)
     if (arrowTimer >= 30) { // toggle every 30 frames (0.5 sec at 60 fps)
         arrowVisible = !arrowVisible;
         arrowTimer = 0;
+    }
+}
+
+void Ui::DrawMenuOption(const std::string& text, int index, float y) 
+{
+    float x = GetCentredTextX(textFont, text, 32.0f, 2.0f);
+    Vector2 position = { x, y};
+
+    DrawTextEx(textFont, text.c_str(), position, 32.0f, 2.0f, RAYWHITE);
+
+    if (Config::commandNum == index) {
+        BlinkingArrow(x, y);
     }
 }

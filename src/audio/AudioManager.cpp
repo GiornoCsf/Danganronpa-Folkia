@@ -3,6 +3,9 @@
 void AudioManager::Init() {
     InitAudioDevice();
 
+    sounds.push_back(LoadSound("res/audio/Soundeffects/select.wav")); // 0
+    sounds.push_back(LoadSound("res/audio/Soundeffects/cursor.wav")); // 1
+
     musicTracks.push_back(LoadMusicStream("res/audio/BGM/Danganronpa!.mp3"));   // 0
     musicTracks.push_back(LoadMusicStream("res/audio/BGM/BeautifulDeath.mp3")); // 1
 }

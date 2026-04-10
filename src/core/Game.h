@@ -5,6 +5,7 @@
 #include "../entities/Player.h"
 #include "../tile/TileManager.h"
 #include "../audio/AudioManager.h"
+#include "../dialogue/DialogueManager.h"
 
 class Game
 {
@@ -17,9 +18,12 @@ private:
     void Draw();
     void Shutdown();
 
+    void StartNewGameScene();
+
     KeyHandler keyH;
     TileManager tileManager;
     AudioManager aManager;
+    DialogueManager dialogueManager;
     Ui ui;
     Player player;
 };

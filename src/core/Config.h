@@ -16,11 +16,13 @@ namespace Config
 
     extern int commandNum;
 
-    // GAME STATES
-    enum class GameState
+    // GAME MODES
+    enum class GameMode
     {
         Title,
-        Play
+        VisualNovel,
+        Overworld2D
     };
-    extern GameState gameState;
+
+    extern GameMode gameMode;
 }

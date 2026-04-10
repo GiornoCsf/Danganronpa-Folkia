@@ -6,8 +6,7 @@ void TileManager::LoadTiles()
 {
     tileSheet = LoadTexture("res/tiles/tiles.png");
 
-    if (tileSheet.id == 0)
-    {
+    if (tileSheet.id == 0) {
         std::cout << "Failed to load tilesheet.\n";
         return;
     }
@@ -42,18 +41,14 @@ void TileManager::LoadMap(const std::string& path)
 {
     std::ifstream file(path);
 
-    if (!file.is_open())
-    {
+    if (!file.is_open()) {
         std::cout << "Failed to open map file: " << path << "\n";
         return;
     }
 
-    for (int row = 0; row < Config::maxScreenRow; row++)
-    {
-        for (int col = 0; col < Config::maxScreenCol; col++)
-        {
-            if (!(file >> map[row][col]))
-            {
+    for (int row = 0; row < Config::maxScreenRow; row++) {
+        for (int col = 0; col < Config::maxScreenCol; col++) {
+            if (!(file >> map[row][col])) {
                 std::cout << "Failed reading map data at row " << row
                           << ", col " << col << "\n";
                 map[row][col] = 0;
@@ -66,14 +61,11 @@ void TileManager::LoadMap(const std::string& path)
 
 void TileManager::Draw()
 {
-    for (int row = 0; row < Config::maxScreenRow; row++)
-    {
-        for (int col = 0; col < Config::maxScreenCol; col++)
-        {
+    for (int row = 0; row < Config::maxScreenRow; row++) {
+        for (int col = 0; col < Config::maxScreenCol; col++) {
             int tileNum = map[row][col];
 
-            if (tileNum < 0 || tileNum >= static_cast<int>(tiles.size()))
-            {
+            if (tileNum < 0 || tileNum >= static_cast<int>(tiles.size())) {
                 std::cout << "Invalid tile index at row " << row
                           << ", col " << col
                           << ": " << tileNum << "\n";
@@ -103,8 +95,7 @@ void TileManager::Draw()
 
 void TileManager::Unload()
 {
-    if (tileSheet.id != 0)
-    {
+    if (tileSheet.id != 0) {
         UnloadTexture(tileSheet);
     }
 }

@@ -9,33 +9,28 @@ void Player::Update(const KeyHandler& keyH, float dt)
 {
     isMoving = false;
 
-    if (keyH.up)
-    {
+    if (keyH.up) {
         position.y -= speed * dt;
         currentRow = 2;
         isMoving = true;
     }
-    if (keyH.down)
-    {
+    if (keyH.down) {
         position.y += speed * dt;
         currentRow = 0;
         isMoving = true;
     }
-    if (keyH.left)
-    {
+    if (keyH.left) {
         position.x -= speed * dt;
         currentRow = 3;
         isMoving = true;
     }
-    if (keyH.right)
-    {
+    if (keyH.right) {
         position.x += speed * dt;
         currentRow = 1;
         isMoving = true;
     }
 
-    if (isMoving)
-    {
+    if (isMoving) {
         animationTimer += dt;
         if (animationTimer >= animationSpeed)
         {
@@ -45,8 +40,7 @@ void Player::Update(const KeyHandler& keyH, float dt)
                 currentFrame = 0;
         }
     }
-    else
-    {
+    else {
         currentFrame = 0;
     }
 }
@@ -79,8 +73,7 @@ void Player::Draw()
 
 void Player::Unload()
 {
-    if (spriteSheet.id != 0)
-    {
+    if (spriteSheet.id != 0) {
         UnloadTexture(spriteSheet);
     }
 }

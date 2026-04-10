@@ -10,4 +10,6 @@ public:
     bool left = false;
     bool right = false;
     bool interact = false;
+    bool shouldExit = false;
+    bool confirm = false;
 };
