@@ -11,6 +11,7 @@ enum SoundID {
 enum MusicID {
     BGM_TITLE,
     BGM_FREE_ROAM,
+    BGM_BEAUTIFUL_DAYS,
     BGM_INVESTIGATION
 };
 

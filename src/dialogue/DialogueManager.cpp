@@ -14,6 +14,7 @@ void DialogueManager::Advance()
         return;
 
     currentIndex++;
+    lettersCount = 0;
 
     if (currentIndex >= static_cast<int>(lines.size())) {
         finished = true;

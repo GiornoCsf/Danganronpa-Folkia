@@ -25,7 +25,7 @@ void Game::Init()
 
     AudioManager::Init();
     AudioManager::PlayBGM(BGM_TITLE);
-    ui.Init();
+    ui.Init(&dialogueManager);
 
     tileManager.LoadTiles();
     tileManager.LoadMap("res/maps/test.txt");
@@ -45,6 +45,7 @@ void Game::Update(float dt)
 
             if (Config::commandNum == 0) {
                 StartNewGameScene();
+                AudioManager::PlayBGM(BGM_BEAUTIFUL_DAYS);
             } 
             else if (Config::commandNum == 1) {
                 Config::gameMode = Config::GameMode::Overworld2D;
@@ -84,8 +85,13 @@ void Game::Draw()
         player.Draw();
         ui.Draw();
     }
-    else if (Config::gameMode == Config::GameMode::Title)
+    else if (Config::gameMode == Config::GameMode::Title) {
         ui.Draw();
+    }
+        
+    else if (Config::gameMode == Config::GameMode::VisualNovel) {
+        ui.Draw();
+    }
 
     EndDrawing();
 }
@@ -96,8 +102,8 @@ void Game::StartNewGameScene()
     {
         { "", "A quiet hum filled the room." },
         { "", "The screen flickered to life." },
-        { "You", "Where... am I?" },
-        { "You", "This doesn't feel right." }
+        { "You", "What... what the fuck nigga?" },
+        { "You", "This visual novel style sucks ASS." }
     };
 
     dialogueManager.StartScene(introLines);

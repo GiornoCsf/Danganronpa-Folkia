@@ -13,6 +13,10 @@ public:
 
     const Dialogue& GetCurrentLine() const;
 
+    int framesCounter = 0;
+    int lettersCount = 0;
+    const int typeSpeed = 2;
+
 private:
     std::vector<Dialogue> lines;
     int currentIndex = 0;

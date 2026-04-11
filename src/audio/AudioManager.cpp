@@ -8,6 +8,8 @@ void AudioManager::Init() {
 
     musicTracks.push_back(LoadMusicStream("res/audio/BGM/Danganronpa!.mp3"));   // 0
     musicTracks.push_back(LoadMusicStream("res/audio/BGM/BeautifulDeath.mp3")); // 1
+    musicTracks.push_back(LoadMusicStream("res/audio/BGM/BeautifulDays.mp3")); // 2
+    
 }
 
 void AudioManager::PlaySFX(SoundID id) {
