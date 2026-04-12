@@ -12,19 +12,22 @@ Ui::~Ui()
 {
     if (titleFont.texture.id != 0) UnloadFont(titleFont);
     if (textFont.texture.id != 0) UnloadFont(textFont);
-    //UnloadTexture(titleBackground);
+    UnloadTexture(titleBackground);
 }
 
 void Ui::Init(DialogueManager* dm)
 {
     dialogueManager = dm;
-    titleBackground = LoadTexture("res/textures/courtroom.png");
+    title = LoadTexture("res/textures/Danganronpa_folkia_logo.png");
+    titleBackground = LoadTexture("res/textures/hopespeak.png");
     spriteTest = LoadTexture("res/sprites/npcs/Makoto.png");
     hud = LoadTexture("res/textures/HUD.png");
     room = LoadTexture("res/textures/room.png");
     titleFont = LoadFontEx("res/fonts/serpentine-sans-icg-bold-oblique.ttf", 64, nullptr, 0); 
     textFont = LoadFontEx("res/fonts/goodbyeDespair.ttf", 32, nullptr, 0);
-    dialogueFont = LoadFontEx("res/fonts/NotoSans-Bold.ttf", 64, nullptr, 0);
+    dialogueFont = LoadFontEx("res/fonts/NotoSans-Bold.ttf", 32, nullptr, 0);
+
+    bloom = LoadShader(0, "res/shaders/bloom.fs");
     
     if (titleFont.texture.id != 0) SetTextureFilter(titleFont.texture, TEXTURE_FILTER_BILINEAR);
     if (textFont.texture.id != 0) SetTextureFilter(textFont.texture, TEXTURE_FILTER_BILINEAR);
@@ -55,28 +58,58 @@ void Ui::DrawTitleScreen()
     
     // MAIN TITLE
     std::string text = "Danganronpa:Folkia";
-    float x = GetCentredTextX(titleFont, text, 64.0f, 2.0f);
-    float y = Config::tileSize * 4.0f;
+    float x = (GetScreenWidth() / 2.0f) - (title.width / 2.0f);
+    float y = Config::tileSize * 1.0f;
 
-    DrawTextEx(titleFont, text.c_str(), { x, y }, 64.0f, 2.0f, RAYWHITE);
+    float intensity = 2.0f; // High intensity for that neon look
+    int intensityLoc = GetShaderLocation(bloom, "intensity");
+    SetShaderValue(bloom, intensityLoc, &intensity, SHADER_UNIFORM_FLOAT);
+
+    BeginShaderMode(bloom);
+        DrawTexture(title, x, y, WHITE);
+    EndShaderMode();
+    //DrawTextEx(titleFont, text.c_str(), { x, y }, 64.0f, 2.0f, RAYWHITE);
+
+    float startY = Config::tileSize * 7.5f; 
+    float barHeight = Config::tileSize * 0.8f;
+    float barWidth = 350.0f;
+    float barX = (GetScreenWidth() - barWidth) / 2.0f;
+
+    float highlightY = startY + (Config::commandNum * Config::tileSize * 1.2f) - (barHeight / 4.0f);
+    float slant = 20.0f; // How much the bar tilts
+
+    Vector2 topLeft     = { barX - slant, highlightY };
+    Vector2 topRight    = { barX + barWidth - slant, highlightY };
+    Vector2 bottomRight = { barX + barWidth + slant, highlightY + barHeight };
+    Vector2 bottomLeft  = { barX + slant, highlightY + barHeight };
+
+
+    Vector2 points[4] = { topLeft, bottomLeft, bottomRight, topRight };
+    DrawTriangleFan(points, 4, ColorAlpha(BLACK, 0.8f));
+
+   
+    DrawLineEx(topLeft, bottomLeft, 4.0f, RAYWHITE);
+
+
+    DrawLineEx(bottomLeft, bottomRight, 1.0f, ColorAlpha(RAYWHITE, 0.3f));
+    DrawLineEx(topRight, topLeft, 1.0f, ColorAlpha(RAYWHITE, 0.3f));
 
     // NEW GAME
-    y += Config::tileSize * 3.5f;
+    y = startY;
+    //y += Config::tileSize * 6.5f;
     DrawMenuOption("NEW GAME", 0, y);
 
     // LOAD GAME
-    y += Config::tileSize;
+    y += Config::tileSize * 1.2f;
     DrawMenuOption("LOAD GAME", 1, y);
 
     // OPTIONS
-    y += Config::tileSize;
+    y += Config::tileSize * 1.2f;
     DrawMenuOption("OPTIONS", 2, y);
 
     // QUIT
-    y += Config::tileSize;
+    y += Config::tileSize * 1.2f;
     DrawMenuOption("QUIT", 3, y);
-
-    
 }
 
 void Ui::DrawVisualNovel()
@@ -174,10 +207,10 @@ void Ui::DrawAdvancePrompt()
 
 void Ui::DrawMenuOption(const std::string& text, int index, float y) 
 {
-    float x = GetCentredTextX(textFont, text, 32.0f, 2.0f);
+    float x = GetCentredTextX(dialogueFont, text, 32.0f, 2.0f);
     Vector2 position = { x, y};
 
-    DrawTextEx(textFont, text.c_str(), position, 32.0f, 2.0f, RAYWHITE);
+    DrawTextEx(dialogueFont, text.c_str(), position, 32.0f, 2.0f, RAYWHITE);
 
     if (Config::commandNum == index) {
         BlinkingArrow(x, y);

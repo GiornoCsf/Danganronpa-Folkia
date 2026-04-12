@@ -33,9 +33,11 @@ private:
     Font titleFont;
     Font textFont;
     Font dialogueFont;
+    Texture2D title{};
     Texture2D titleBackground{};
     Texture2D hud{};
     Texture2D spriteTest{};
     Texture2D room{};
+    Shader bloom{};
     DialogueManager* dialogueManager = nullptr;
 };
