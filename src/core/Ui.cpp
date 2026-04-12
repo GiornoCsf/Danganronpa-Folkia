@@ -129,7 +129,7 @@ void Ui::DrawVisualNovel()
     const Dialogue& line = dialogueManager->GetCurrentLine();
     DrawDialogueBox();
     DrawSpeakerName(line.speaker);
-    DrawDialogueText(line.text);
+    DrawDialogueText(line.text, line.isThought);
     DrawAdvancePrompt();
 }
 
@@ -183,7 +183,7 @@ void Ui::DrawSpeakerName(const std::string& speaker)
     DrawTextEx(dialogueFont, speaker.c_str(), position, 20.0f, 2.0f, RED);
 }
 
-void Ui::DrawDialogueText(const std::string& text)
+void Ui::DrawDialogueText(const std::string& text, bool isThought)
 {
     dialogueManager->framesCounter++;
     if (dialogueManager->framesCounter >= dialogueManager->typeSpeed) {
@@ -193,7 +193,8 @@ void Ui::DrawDialogueText(const std::string& text)
     Vector2 position = { 40.0f, static_cast<float>(Config::screenHeight - 110) };
 
     std::string visibleText = text.substr(0, dialogueManager->lettersCount);
-    DrawTextEx(dialogueFont, visibleText.c_str(), position, 32.0f, 2.0f, RAYWHITE);
+    Color textColor = isThought ? WHITE : Color{126, 231, 255, 255};
+    DrawTextEx(dialogueFont, visibleText.c_str(), position, 32.0f, 2.0f, textColor);
 }
 
 void Ui::DrawAdvancePrompt()

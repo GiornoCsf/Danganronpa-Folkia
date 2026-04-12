@@ -61,6 +61,7 @@ void Game::Update(float dt)
         if (keyH.confirm)
         {
             dialogueManager.Advance();
+            AudioManager::PlaySFX(SFX_SELECT);
 
             if (dialogueManager.IsFinished())
             {
@@ -100,10 +101,10 @@ void Game::StartNewGameScene()
 {
     std::vector<Dialogue> introLines =
     {
-        { "", "A quiet hum filled the room." },
-        { "", "The screen flickered to life." },
-        { "You", "What... what the fuck nigga?" },
-        { "You", "This visual novel style sucks ASS." }
+        { "???", "A quiet hum filled the room.", false },
+        { "???", "The screen flickered to life.", false },
+        { "You", "What... what?", true },
+        { "You", "Where am I?.", true }
     };
 
     dialogueManager.StartScene(introLines);

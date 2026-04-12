@@ -23,7 +23,7 @@ private:
     void DrawPlayUI();
     void DrawDialogueBox();
     void DrawSpeakerName(const std::string& speaker);
-    void DrawDialogueText(const std::string& text);
+    void DrawDialogueText(const std::string& text, bool spoken);
     void DrawAdvancePrompt();
     float GetCentredTextX(const Font& font, const std::string& text, float fontSize, float spacing);
     void BlinkingArrow(int x, int y);
