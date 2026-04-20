@@ -103,8 +103,8 @@ void Game::StartNewGameScene()
     {
         { "???", "A quiet hum filled the room.", false },
         { "???", "The screen flickered to life.", false },
-        { "You", "What... what?", true },
-        { "You", "Where am I?.", true }
+        { "Makoto Naegi", "What... what?", true },
+        { "Makoto Naegi", "Where am I?.", true }
     };
 
     dialogueManager.StartScene(introLines);

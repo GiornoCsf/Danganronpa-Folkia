@@ -26,6 +26,7 @@ void Ui::Init(DialogueManager* dm)
     titleFont = LoadFontEx("res/fonts/serpentine-sans-icg-bold-oblique.ttf", 64, nullptr, 0); 
     textFont = LoadFontEx("res/fonts/goodbyeDespair.ttf", 32, nullptr, 0);
     dialogueFont = LoadFontEx("res/fonts/NotoSans-Bold.ttf", 32, nullptr, 0);
+    dialgoueBox = LoadTexture("res/textures/drdialoguebox.png");
 
     bloom = LoadShader(0, "res/shaders/bloom.fs");
     
@@ -125,7 +126,7 @@ void Ui::DrawVisualNovel()
 
     DrawTexturePro(room, source, dest, { 0, 0 }, 0.0f, WHITE);
 
-    DrawTexture(spriteTest, Config::screenWidth / 2, Config::tileSize * 3, WHITE);
+    DrawTexture(spriteTest, Config::tileSize * 9, Config::tileSize * 2, WHITE);
     const Dialogue& line = dialogueManager->GetCurrentLine();
     DrawDialogueBox();
     DrawSpeakerName(line.speaker);
@@ -162,15 +163,20 @@ void Ui::BlinkingArrow(int x, int y)
 
 void Ui::DrawDialogueBox()
 {
-    const int margin = 20;
-    const int boxHeight = 160;
+    // const int margin = 20;
+    // const int boxHeight = 160;
 
-    int boxX = margin;
-    int boxY = Config::screenHeight - boxHeight - margin;
-    int boxWidth = Config::screenWidth - (margin * 2);
+    // int boxX = margin;
+    // int boxY = Config::screenHeight - boxHeight - margin;
+    // int boxWidth = Config::screenWidth - (margin * 2);
 
-    DrawRectangle(boxX, boxY, boxWidth, boxHeight, BLACK);
-    DrawRectangleLines(boxX, boxY, boxWidth, boxHeight, RAYWHITE);
+    // DrawRectangle(boxX, boxY, boxWidth, boxHeight, BLACK);
+    // DrawRectangleLines(boxX, boxY, boxWidth, boxHeight, RAYWHITE);
+    Rectangle source = { 0.0f, 0.0f, (float)dialgoueBox.width, (float)dialgoueBox.height};
+
+    Rectangle dest = { 0.0f, 0.0f, (float)GetScreenWidth(), (float)GetScreenHeight() };
+
+    DrawTexturePro(dialgoueBox, source, dest, { 0, 0 }, 0.0f, WHITE);
 }
 
 void Ui::DrawSpeakerName(const std::string& speaker)
@@ -178,9 +184,9 @@ void Ui::DrawSpeakerName(const std::string& speaker)
     if (speaker.empty())
         return;
 
-    Vector2 position = { 40.0f, static_cast<float>(Config::screenHeight - 150) };
+    Vector2 position = { 10.0f, static_cast<float>(Config::screenHeight - 245) };
 
-    DrawTextEx(dialogueFont, speaker.c_str(), position, 20.0f, 2.0f, RED);
+    DrawTextEx(dialogueFont, speaker.c_str(), position, 32.0f, 2.0f, BLACK);
 }
 
 void Ui::DrawDialogueText(const std::string& text, bool isThought)
@@ -190,7 +196,7 @@ void Ui::DrawDialogueText(const std::string& text, bool isThought)
         dialogueManager->framesCounter = 0;
         if (dialogueManager->lettersCount < text.length()) dialogueManager->lettersCount++;
     }
-    Vector2 position = { 40.0f, static_cast<float>(Config::screenHeight - 110) };
+    Vector2 position = { 20.0f, static_cast<float>(Config::screenHeight - 200) };
 
     std::string visibleText = text.substr(0, dialogueManager->lettersCount);
     Color textColor = isThought ? WHITE : Color{126, 231, 255, 255};
@@ -200,8 +206,8 @@ void Ui::DrawDialogueText(const std::string& text, bool isThought)
 void Ui::DrawAdvancePrompt()
 {
     const std::string prompt = "Press Enter";
-    float x = Config::screenWidth - 210.0f;
-    float y = Config::screenHeight - 50.0f;
+    float x = Config::screenWidth - 250.0f;
+    float y = Config::screenHeight - 80.0f;
 
     DrawTextEx(textFont, prompt.c_str(), { x, y }, 20.0f, 2.0f, GRAY);
 }

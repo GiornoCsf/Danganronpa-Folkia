@@ -38,6 +38,7 @@ private:
     Texture2D hud{};
     Texture2D spriteTest{};
     Texture2D room{};
+    Texture2D dialgoueBox{};
     Shader bloom{};
     DialogueManager* dialogueManager = nullptr;
 };
